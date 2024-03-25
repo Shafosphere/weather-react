@@ -1,0 +1,152 @@
+.grid-container {
+    display: grid;
+    grid-template-rows: repeat(auto-fill);
+    grid-template-columns: repeat(3, 1fr);
+}
+
+.grid-item {
+    background-color: rgba(255, 255, 255, 0.8);
+    margin: 0.5rem;
+    text-align: center;
+    -webkit-box-shadow: 5px 5px 16px 3px rgba(66, 68, 90, 1);
+    -moz-box-shadow: 5px 5px 16px 3px rgba(66, 68, 90, 1);
+    box-shadow: 5px 5px 16px 3px rgba(66, 68, 90, 1);
+    background-color: rgba(5, 125, 198, 1);
+    background-image: linear-gradient(216deg, rgba(5, 125, 198, 1) 1%, rgba(39, 54, 117, 1) 92%);
+    color: white;
+}
+
+.grid-item-top {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    align-content: center;
+    min-height: 125px;
+    padding-top: 1rem;
+    width: 100%;
+    border-bottom: 1px solid white;
+}
+
+.grid-item-top p {
+    flex-grow: 1;
+    /* Pozwala tekstu rosnąć i wypełniać dostępną przestrzeń */
+    margin: 0;
+    /* Usuwa wszystkie marginesy */
+}
+
+.icon-container {
+    transform: scale(5);
+    margin-right: 1.5rem;
+    max-width: 50px;
+    /* Ogranicza szerokość ikony */
+    max-height: 50px;
+    /* Ogranicza wysokość ikony */
+    flex-shrink: 0;
+    /* Zapobiega zmniejszaniu ikony */
+}
+
+
+.grid-item-bottom {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: repeat(9, 1fr);
+    grid-auto-flow: row;
+    align-items: center;
+    border-bottom: 1px solid white;
+    grid-template-areas:
+        "Date Date"
+        "Temperature-Avg Temperature-Max"
+        "Temperature-Avg Temperature-Min"
+        "Precipitation-Probability Rain-Intensity"
+        "Wind-Speed-Avg Wind-Icon"
+        "Wind-Gust-Max Wind-Icon"
+        "Cloud-Cover Humidity"
+        "Sunrise-Time Sunrise-Time"
+        "Sunset-Time Sunset-Time";
+}
+
+.Date {
+    grid-area: Date;
+    font-weight: bold;
+}
+
+.Temperature-Avg {
+    grid-area: Temperature-Avg;
+    font-weight: bold;
+    font-size: 25px;
+}
+
+.Temperature-Max {
+    grid-area: Temperature-Max;
+}
+
+.Temperature-Min {
+    grid-area: Temperature-Min;
+}
+
+.Precipitation-Probability {
+    grid-area: Precipitation-Probability;
+    border-top: 1px solid white;
+    padding-top: 1rem;
+    border-bottom: 1px solid white;
+    padding-bottom: 1rem;
+}
+
+.Rain-Intensity {
+    grid-area: Rain-Intensity;
+    border-top: 1px solid white;
+    padding-top: 1rem;
+    border-bottom: 1px solid white;
+    padding-bottom: 1rem;
+}
+
+.Wind-Speed-Avg {
+    grid-area: Wind-Speed-Avg;
+}
+
+.Wind-Gust-Max {
+    grid-area: Wind-Gust-Max;
+}
+
+.Wind-Icon {
+    grid-area: Wind-Icon;
+    transform: scale(5);
+    margin-top: 1rem;
+}
+
+.Cloud-Cover {
+    grid-area: Cloud-Cover;
+    border-top: 1px solid white;
+    padding-top: 1rem;
+    border-bottom: 1px solid white;
+    padding-bottom: 1rem;
+}
+
+.Humidity {
+    grid-area: Humidity;
+    border-top: 1px solid white;
+    padding-top: 1rem;
+    border-bottom: 1px solid white;
+    padding-bottom: 1rem
+}
+
+.Sunrise-Icon {
+    margin-right: 1rem;
+    transform: scale(3);
+}
+
+.Sunrise-Time {
+    grid-area: Sunrise-Time;
+}
+
+.Sunset-Time {
+    grid-area: Sunset-Time;
+}
+
+.Sunset-Icon {
+    transform: scale(3);
+    margin-right: 1rem;
+}
+

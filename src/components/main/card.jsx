@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { WiDaySunny, WiCloudy, WiDayCloudy, WiRain, WiDayRain, WiStrongWind, WiSunrise, WiSunset } from "react-icons/wi";
 import data from './data';
 import "./styles.css";
+import "./styles-card.css"
 export default function WeatherCard() {
     const [icon, setIcon] = useState();
     function getWeatherIcon(cloudCover, rainingPropabylyty) {

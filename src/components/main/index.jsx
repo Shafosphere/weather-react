@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import WeatherCard from './card';
+import ChartPerHour from './chart-hours';
 import "./styles.css";
 import "./background.css"
 import data from './data';
@@ -26,6 +27,7 @@ export default function Main() {
         <div className='bot'>
           <div className='container-bottom'>
             <h5>{data[0].location.name}</h5>
+              <ChartPerHour></ChartPerHour>
               <WeatherCard></WeatherCard>
           </div>
         </div>
