@@ -6,16 +6,17 @@ import { Chart } from 'chart.js';
 import ChartDataLabels from 'chartjs-plugin-datalabels';
 import 'chart.js/auto'; // If you haven't already imported Chart.js
 
-export default function ChartPerHour() {
+export default function ChartPerMinute() {
     Chart.register(ChartDataLabels);
     const chartData = {
-        labels: data[0].timelines.hourly.map(item => item.time),
+        labels: data[0].timelines.minutely.map(item => item.time),
         datasets: [
             {
                 label: 'Temerature',
-                data: data[0].timelines.hourly.map(item => item.values.temperature),
+                data: data[0].timelines.minutely.map(item => item.values.temperature),
                 fill: true, // Optionally modify if you want a filled line chart
-                borderColor: 'rgb(109, 192, 213)', // Or any color
+                borderColor: '#7066c2', // Or any color
+                backgroundColor: '#b8b3e0',
                 pointRadius: 20,
                 pointStyle: false,
             }
@@ -24,9 +25,23 @@ export default function ChartPerHour() {
     const chartOptions = {
 
         plugins: {
+            tooltip: {
+                callbacks: {
+                    // Tylko tytuł tooltip jest modyfikowany, aby pokazać wartość temperatury
+                    title: function(tooltipItems) {
+                        return ''; // Usuwa domyślny tytuł
+                    },
+                    // Ustawia etykietę tooltip, aby pokazywała tylko wartość temperatury
+                    label: function(tooltipItem) {
+                        let label = tooltipItem.chart.data.labels[tooltipItem.dataIndex];
+                        let value = tooltipItem.parsed.y;
+                        return `${value}°C`;
+                    }
+                }
+            },
             title: {
                 display: true,
-                text: 'Temperature in the coming 5-days'
+                text: 'Temperature in the next hour'
             },
             legend: {
                 display: false
@@ -54,6 +69,10 @@ export default function ChartPerHour() {
                     },
                 },
                 ticks: {
+                    autoSkip: true,
+                    callback: function (val, index){
+                        return index % 2 === 0 ? (parseFloat(val.toFixed(2))) : '';
+                    },
                     font: {
                         size: 15
                     }
@@ -69,18 +88,18 @@ export default function ChartPerHour() {
                     // Wyświetl etykietę co piąty element
                     callback: function (val, index) {
                         const date = moment(this.getLabelForValue(val));
-                        if (date.format('HH:mm') == '00:00') { return (date.format('dddd')); }
-                        if (date.format('HH:mm') == '12:00') { return (date.format('HH:mm')); }
+                        
+                        // return (date.format('HH:mm'));
+                        return index % 10 === 0 ? (date.format('HH:mm')) : '';
                     },
                     color: 'black',
-                    maxRotation: 30,
+                    maxRotation: 0,
                     font: {
                         size: 15 // Ustaw mniejszy rozmiar czcionki
                     }
                 },
                 grid: {
-                    display: true, // Ukrywa siatkę osi X
-                    color: 'rgba(0, 0, 0, 0.1)' // Ustawia subtelny kolor linii siatki
+                    display: false, // Ukrywa siatkę osi X
                 }
             }
         }

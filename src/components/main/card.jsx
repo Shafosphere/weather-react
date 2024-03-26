@@ -33,8 +33,8 @@ export default function WeatherCard() {
                             <p>{item.values.temperatureApparentAvg}°C</p>
                         </div>
                     </div>
-                    <div class="grid-item-bottom">
-                        <div class="Date">
+                    <div className="grid-item-bottom">
+                        <div className="Date">
                             <h3>
                             {
                                 new Date(item.time).toLocaleDateString('en-GB', {
@@ -43,20 +43,20 @@ export default function WeatherCard() {
                             }
                             </h3>
                         </div>
-                        <div class="Temperature-Avg">
+                        <div className="Temperature-Avg">
                         {item.values.temperatureApparentAvg}°C
                         </div>
-                        <div class="Temperature-Max">max {item.values.temperatureApparentMax}°C</div>
-                        <div class="Temperature-Min">min {item.values.temperatureApparentMin}°C</div>
-                        <div class="Precipitation-Probability">PoP: {item.values.precipitationProbabilityAvg}%</div>
-                        <div class="Rain-Intensity">RI{item.values.rainIntensityAvg} mm/h</div>
-                        <div class="Wind-Speed-Avg"> Avg {item.values.windSpeedAvg} km/h</div>
-                        <div class="Wind-Gust-Max">Max {item.values.windGustMax} km/h</div>
-                        <div class="Wind-Icon"><WiStrongWind /></div>
-                        <div class="Cloud-Cover">Clouds: {item.values.cloudCoverAvg}%</div>
-                        <div class="Humidity">Humidity: {item.values.humidityAvg}%</div>
-                        <div class="Sunrise-Time"><WiSunrise className='Sunrise-Icon'/> {new Date(item.values.sunriseTime).toLocaleTimeString()}</div>
-                        <div class="Sunset-Time"><WiSunset className='Sunset-Icon'/> {new Date(item.values.sunsetTime).toLocaleTimeString()}</div>
+                        <div className="Temperature-Max">max {item.values.temperatureApparentMax}°C</div>
+                        <div className="Temperature-Min">min {item.values.temperatureApparentMin}°C</div>
+                        <div className="Precipitation-Probability">PoP: {item.values.precipitationProbabilityAvg}%</div>
+                        <div className="Rain-Intensity">RI{item.values.rainIntensityAvg} mm/h</div>
+                        <div className="Wind-Speed-Avg"> Avg {item.values.windSpeedAvg} km/h</div>
+                        <div className="Wind-Gust-Max">Max {item.values.windGustMax} km/h</div>
+                        <div className="Wind-Icon"><WiStrongWind /></div>
+                        <div className="Cloud-Cover">Clouds: {item.values.cloudCoverAvg}%</div>
+                        <div className="Humidity">Humidity: {item.values.humidityAvg}%</div>
+                        <div className="Sunrise-Time"><WiSunrise className='Sunrise-Icon'/> {new Date(item.values.sunriseTime).toLocaleTimeString()}</div>
+                        <div className="Sunset-Time"><WiSunset className='Sunset-Icon'/> {new Date(item.values.sunsetTime).toLocaleTimeString()}</div>
                     </div>
                 </div>
             ))}
