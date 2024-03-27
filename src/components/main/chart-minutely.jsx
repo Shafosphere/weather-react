@@ -5,6 +5,7 @@ import { Line } from 'react-chartjs-2';
 import { Chart } from 'chart.js';
 import ChartDataLabels from 'chartjs-plugin-datalabels';
 import 'chart.js/auto'; // If you haven't already imported Chart.js
+import './styles-chart-minutely.css'
 
 export default function ChartPerMinute() {
     Chart.register(ChartDataLabels);
@@ -16,7 +17,8 @@ export default function ChartPerMinute() {
                 data: data[0].timelines.minutely.map(item => item.values.temperature),
                 fill: true, // Optionally modify if you want a filled line chart
                 borderColor: '#7066c2', // Or any color
-                backgroundColor: '#b8b3e0',
+                backgroundColor: 'rgba(184, 179, 224, 0.5)',
+                tension: 0.7,
                 pointRadius: 20,
                 pointStyle: false,
             }
@@ -28,14 +30,14 @@ export default function ChartPerMinute() {
             tooltip: {
                 callbacks: {
                     // Tylko tytuł tooltip jest modyfikowany, aby pokazać wartość temperatury
-                    title: function(tooltipItems) {
-                        return ''; // Usuwa domyślny tytuł
+                    title: function (tooltipItem) {
+                        let formatedLabel = moment(tooltipItem[0].label);
+                        return `${(formatedLabel.format('dddd'))}` + ' ' +`${(formatedLabel.format('HH:mm'))}`;
                     },
                     // Ustawia etykietę tooltip, aby pokazywała tylko wartość temperatury
-                    label: function(tooltipItem) {
-                        let label = tooltipItem.chart.data.labels[tooltipItem.dataIndex];
+                    label: function (tooltipItem) {
                         let value = tooltipItem.parsed.y;
-                        return `${value}°C`;
+                        return `${value}°C `;
                     }
                 }
             },
@@ -51,7 +53,7 @@ export default function ChartPerMinute() {
                 anchor: 'end',
                 align: 'top',
                 // offset: 20,
-                formatter: function(value, item) {
+                formatter: function (value, item) {
                     return item.dataIndex % 5 === 0 ? value + '°C' : '';
                 }
             },
@@ -70,13 +72,16 @@ export default function ChartPerMinute() {
                 },
                 ticks: {
                     autoSkip: true,
-                    callback: function (val, index){
+                    callback: function (val, index) {
                         return index % 2 === 0 ? (parseFloat(val.toFixed(2))) : '';
                     },
                     font: {
                         size: 15
                     }
                 },
+                grid: {
+                    display: true, // Ukrywa siatkę osi X
+                }
             },
             x: {
                 title: {
@@ -88,7 +93,7 @@ export default function ChartPerMinute() {
                     // Wyświetl etykietę co piąty element
                     callback: function (val, index) {
                         const date = moment(this.getLabelForValue(val));
-                        
+
                         // return (date.format('HH:mm'));
                         return index % 10 === 0 ? (date.format('HH:mm')) : '';
                     },

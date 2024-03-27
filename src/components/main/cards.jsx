@@ -23,8 +23,8 @@ export default function WeatherCard() {
     return (
         <div className='grid-container'>
             {/* <h5>{(data[0].timelines.daily).length}</h5> */}
-            {(data[0].timelines.daily).map((item) => (
-                <div className='grid-item'>
+            {(data[0].timelines.daily).map((item, index) => (
+                <div key={index} className='grid-item'>
                     <div className='grid-item-top'>
                         <div className='icon-container'>
                             {getWeatherIcon(item.values.cloudCoverAvg, item.values.precipitationProbabilityAvg)}
@@ -36,15 +36,15 @@ export default function WeatherCard() {
                     <div className="grid-item-bottom">
                         <div className="Date">
                             <h3>
-                            {
-                                new Date(item.time).toLocaleDateString('en-GB', {
-                                    day: '2-digit', month: '2-digit', year: 'numeric', weekday: 'long'
-                                })
-                            }
+                                {
+                                    new Date(item.time).toLocaleDateString('en-GB', {
+                                        day: '2-digit', month: '2-digit', year: 'numeric', weekday: 'long'
+                                    })
+                                }
                             </h3>
                         </div>
                         <div className="Temperature-Avg">
-                        {item.values.temperatureApparentAvg}°C
+                            {item.values.temperatureApparentAvg}°C
                         </div>
                         <div className="Temperature-Max">max {item.values.temperatureApparentMax}°C</div>
                         <div className="Temperature-Min">min {item.values.temperatureApparentMin}°C</div>
@@ -55,8 +55,8 @@ export default function WeatherCard() {
                         <div className="Wind-Icon"><WiStrongWind /></div>
                         <div className="Cloud-Cover">Clouds: {item.values.cloudCoverAvg}%</div>
                         <div className="Humidity">Humidity: {item.values.humidityAvg}%</div>
-                        <div className="Sunrise-Time"><WiSunrise className='Sunrise-Icon'/> {new Date(item.values.sunriseTime).toLocaleTimeString()}</div>
-                        <div className="Sunset-Time"><WiSunset className='Sunset-Icon'/> {new Date(item.values.sunsetTime).toLocaleTimeString()}</div>
+                        <div className="Sunrise-Time"><WiSunrise className='Sunrise-Icon' /> {new Date(item.values.sunriseTime).toLocaleTimeString()}</div>
+                        <div className="Sunset-Time"><WiSunset className='Sunset-Icon' /> {new Date(item.values.sunsetTime).toLocaleTimeString()}</div>
                     </div>
                 </div>
             ))}

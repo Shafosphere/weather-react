@@ -18,12 +18,46 @@ export default function ChartPerHour() {
                 borderColor: 'rgb(109, 192, 213)', // Or any color
                 pointRadius: 20,
                 pointStyle: false,
+                segment: {
+                    backgroundColor: (ctx) => {
+                        // Pobierz datę dla punktu początkowego segmentu
+                        const date = moment(chartData.labels[ctx.p0DataIndex]);
+                        // Sprawdź dzień tygodnia i zwróć odpowiedni kolor
+                        switch (date.format('dddd')) {
+                            case 'Monday':
+                            case 'Thursday':
+                                return 'rgba(67, 124, 144, 0.3)';
+                            case 'Tuesday':
+                            case 'Friday':
+                                return 'rgba(0, 204, 102, 0.3)'; // Czerwony dla poniedziałku
+                            case 'Wednesday':
+                            case 'Saturday':
+                                return 'rgba(247, 197, 72, 0.4)'; // Czerwony dla poniedziałku
+                            case 'Sunday':
+                                return 'rgba(247, 92, 3, 0.3)'; // Czerwony dla poniedziałku
+                            default:
+                                return 'rgba(0, 0, 255, 0.3)'; // Domyślny kolor dla innych dni
+                        }
+                    },
+                },
             }
         ]
     };
     const chartOptions = {
 
         plugins: {
+            tooltip: {
+                callbacks: {
+                    title: function (tooltipItem) {
+                        let formatedLabel = moment(tooltipItem[0].label);
+                        return `${(formatedLabel.format('dddd'))}` + ' ' + `${(formatedLabel.format('HH:mm'))}`;
+                    },
+                    label: function (tooltipItem) {
+                        let value = tooltipItem.parsed.y;
+                        return `${value}°C `;
+                    },
+                }
+            },
             title: {
                 display: true,
                 text: 'Temperature in the coming 5-days'
@@ -36,7 +70,7 @@ export default function ChartPerHour() {
                 anchor: 'end',
                 align: 'top',
                 // offset: 20,
-                formatter: function(value, item) {
+                formatter: function (value, item) {
                     return item.dataIndex % 5 === 0 ? value + '°C' : '';
                 }
             },
