@@ -40,7 +40,7 @@ function WeatherDetails({ data }) {
         <div className="body-right-current">
             <div className="-current-temperature-value">{data.temperature} °C</div>
             <div className="current-text">Current Temperature: </div>
-            <div className="precipitationProbability-text">Precipitation Probability:</div>
+            <div className="precipitationProbability-text">Rain Chance:</div>
             <div className="temperatureApparent-text">Apparent Temperature:</div>
             <div className="temperatureApparent-value">{data.temperatureApparent} °C</div>
             <div className="precipitationProbability-value">

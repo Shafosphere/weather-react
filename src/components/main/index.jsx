@@ -28,6 +28,8 @@ export default function Main() {
         </div>
         <div className='bot'>
           <div className='container-bottom'>
+            <div className='wave'></div>
+            <div className='wave'></div>
             <h5>{data[0].location.name}</h5>
             <CurrentWeather></CurrentWeather>
             <WeatherCard></WeatherCard>
