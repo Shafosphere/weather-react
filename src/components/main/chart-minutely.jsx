@@ -1,43 +1,106 @@
 import data from "./data";
-import React from 'react';
+import React, { useEffect, useReducer } from 'react';
 import moment from 'moment';
 import { Line } from 'react-chartjs-2';
 import { Chart } from 'chart.js';
 import ChartDataLabels from 'chartjs-plugin-datalabels';
-import 'chart.js/auto'; // If you haven't already imported Chart.js
+import 'chart.js/auto';
 import './styles-chart-minutely.css'
 
+const initialState = {
+    display: 'temperature',
+};
+
+function reducer(state, action) {
+    switch (action.type) {
+        case 'temperature':
+            return { display: 'temperature' };
+        case 'humidity':
+            return { display: 'humidity' };
+        case 'pressure':
+            return { display: 'pressureSurfaceLevel' };
+        case 'windSpeed':
+            return { display: 'windSpeed' };
+        default:
+            throw new Error();
+    }
+}
+
 export default function ChartPerMinute() {
+    const [state, dispatch] = useReducer(reducer, initialState);
     Chart.register(ChartDataLabels);
+
+    useEffect(() => {
+        console.log(state);
+        Chart.unregister(textCenter);
+        Chart.register(textCenter);
+    }, [state]);
+
     const chartData = {
         labels: data[0].timelines.minutely.map(item => item.time),
         datasets: [
             {
-                label: 'Temerature',
-                data: data[0].timelines.minutely.map(item => item.values.temperature),
-                fill: true, // Optionally modify if you want a filled line chart
-                borderColor: '#7066c2', // Or any color
-                backgroundColor: 'rgba(184, 179, 224, 0.5)',
+                label: state.display,
+                data: data[0].timelines.minutely.map(item => item.values[state.display]),
+                fill: true,
+                borderColor: () => {
+                    switch (state.display) {
+                        case 'temperature':
+                            return '#FF0000';
+                        case 'humidity':
+                            return '#0000FF';
+                        case 'pressureSurfaceLevel':
+                            return '#00FF00';
+                        default:
+                            return '#000000';
+                    }
+                },
+                backgroundColor: () => {
+                    switch (state.display) {
+                        case 'temperature':
+                            return 'rgba(255, 0, 0, 0.5)';
+                        case 'humidity':
+                            return 'rgba(0, 0, 255, 0.5)';
+                        case 'pressureSurfaceLevel':
+                            return 'rgba(0, 255, 0, 0.5)';
+                        default:
+                            return 'rgba(0, 0, 0, 0.5)';
+                    }
+                },
                 tension: 0.7,
-                pointRadius: 20,
+                pointRadius: 30,
                 pointStyle: false,
             }
         ]
     };
+    const textCenter = {
+        id: 'textCenter',
+        beforeDatasetsDraw(chart, args, options) {
+            const { ctx, chartArea: { top, bottom, left, right, width, height } } = chart;
+            console.log(state.display)
+            if (options.shouldDisplayText) { 
+                ctx.save();
+                ctx.font = 'bold 50px sans-serif';
+                ctx.fillStyle = 'grey';
+                ctx.textAlign = 'center';
+                ctx.fillText(backgroundChartText(), width / 2 + left, height / 2 + top);
+                ctx.restore();
+           }
+        }
+    }
     const chartOptions = {
-
         plugins: {
             tooltip: {
                 callbacks: {
-                    // Tylko tytuł tooltip jest modyfikowany, aby pokazać wartość temperatury
                     title: function (tooltipItem) {
                         let formatedLabel = moment(tooltipItem[0].label);
-                        return `${(formatedLabel.format('dddd'))}` + ' ' +`${(formatedLabel.format('HH:mm'))}`;
+                        return `${(formatedLabel.format('dddd'))}` + ' ' + `${(formatedLabel.format('HH:mm'))}`;
                     },
-                    // Ustawia etykietę tooltip, aby pokazywała tylko wartość temperatury
                     label: function (tooltipItem) {
                         let value = tooltipItem.parsed.y;
-                        return `${value}°C `;
+                        const displayType = state.display;
+                        const formatterFn = formatters[displayType];
+                        return `${formatterFn(value)}`;
                     }
                 }
             },
@@ -54,15 +117,20 @@ export default function ChartPerMinute() {
                 align: 'top',
                 // offset: 20,
                 formatter: function (value, item) {
-                    return item.dataIndex % 5 === 0 ? value + '°C' : '';
+                    const displayType = state.display;
+                    const formatterFn = formatters[displayType];
+                    return item.dataIndex % 5 === 0 ? formatterFn(value) : '';
                 }
             },
+            textCenter: {
+                shouldDisplayText: true
+            }
         },
         scales: {
             y: {
                 beginAtZero: false,
                 title: {
-                    display: true,
+                    display: false,
                     text: 'Temperature (°C)',
                     font: {
                         size: 20,
@@ -80,7 +148,7 @@ export default function ChartPerMinute() {
                     }
                 },
                 grid: {
-                    display: true, // Ukrywa siatkę osi X
+                    display: true,
                 }
             },
             x: {
@@ -90,17 +158,14 @@ export default function ChartPerMinute() {
                 },
                 ticks: {
                     autoSkip: false,
-                    // Wyświetl etykietę co piąty element
                     callback: function (val, index) {
                         const date = moment(this.getLabelForValue(val));
-
-                        // return (date.format('HH:mm'));
                         return index % 10 === 0 ? (date.format('HH:mm')) : '';
                     },
                     color: 'black',
                     maxRotation: 0,
                     font: {
-                        size: 15 // Ustaw mniejszy rozmiar czcionki
+                        size: 15
                     }
                 },
                 grid: {
@@ -109,9 +174,46 @@ export default function ChartPerMinute() {
             }
         }
     };
+
+    const formatters = {
+        temperature: value => `${value}°C`,
+        humidity: value => `${value} %`,
+        windSpeed: value => `${value} km/h`,
+        pressureSurfaceLevel: value => `${value} hPa`
+    };
+    function backgroundChartText(){
+        switch (state.display) {
+            case 'temperature':
+                return 'Temperature';
+            case 'humidity':
+                return 'Humidity';
+            case 'pressureSurfaceLevel':
+                return 'Rain Chance';
+            default:
+                return 'Wind Speed';
+        };
+    }
+    function click() {
+        console.log(state)
+    }
     return (
         <div>
             <Line data={chartData} options={chartOptions} />
+            <button onClick={() => dispatch({ type: 'temperature' })}>
+                Show Temperature
+            </button>
+            <button onClick={() => dispatch({ type: 'humidity' })}>
+                Show Humidity
+            </button>
+            <button onClick={() => dispatch({ type: 'pressure' })}>
+                Show Pressure
+            </button>
+            <button onClick={() => dispatch({ type: 'windSpeed' })}>
+                Show Wind Speed
+            </button>
+            <button onClick={() => click()}>
+                state
+            </button>
         </div>
     );
 }
