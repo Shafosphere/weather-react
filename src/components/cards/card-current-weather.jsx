@@ -12,8 +12,6 @@ import {
     WiCloud, 
     WiHumidity 
 } from "react-icons/wi";
-import data from "./data";
-
 // Component for displaying the current date
 function CurrentDate({ currentDate }) {
     return (
@@ -76,10 +74,9 @@ function FooterDetails({ data }) {
     );
 }
 
-export default function CurrentWeather() {
+export default function CurrentWeather({ data }) {
     const currentMinutelyData = data[0].timelines.minutely[0].values;
     const currentDateValue = moment(currentMinutelyData.time).format('dddd, DD/MM/YYYY');
-
     return (
         <div className="container-current">
             <div className="window-current">

@@ -1,12 +1,11 @@
-import data from "./data";
 import React from 'react';
 import moment from 'moment';
 import { Line } from 'react-chartjs-2';
 import { Chart } from 'chart.js';
 import ChartDataLabels from 'chartjs-plugin-datalabels';
-import 'chart.js/auto'; // If you haven't already imported Chart.js
+import 'chart.js/auto';
 
-export default function ChartPerHour() {
+export default function ChartPerHour({ data }) {
     Chart.register(ChartDataLabels);
     const chartData = {
         labels: data[0].timelines.hourly.map(item => item.time),
@@ -14,29 +13,29 @@ export default function ChartPerHour() {
             {
                 label: 'Temerature',
                 data: data[0].timelines.hourly.map(item => item.values.temperature),
-                fill: true, // Optionally modify if you want a filled line chart
-                borderColor: 'rgb(109, 192, 213)', // Or any color
+                fill: true,
+                borderColor: 'rgb(109, 192, 213)',
                 pointRadius: 20,
                 pointStyle: false,
                 segment: {
                     backgroundColor: (ctx) => {
-                        // Pobierz datę dla punktu początkowego segmentu
+
                         const date = moment(chartData.labels[ctx.p0DataIndex]);
-                        // Sprawdź dzień tygodnia i zwróć odpowiedni kolor
+
                         switch (date.format('dddd')) {
                             case 'Monday':
                             case 'Thursday':
                                 return 'rgba(67, 124, 144, 0.3)';
                             case 'Tuesday':
                             case 'Friday':
-                                return 'rgba(0, 204, 102, 0.3)'; // Czerwony dla poniedziałku
+                                return 'rgba(0, 204, 102, 0.3)';
                             case 'Wednesday':
                             case 'Saturday':
-                                return 'rgba(247, 197, 72, 0.4)'; // Czerwony dla poniedziałku
+                                return 'rgba(247, 197, 72, 0.4)';
                             case 'Sunday':
-                                return 'rgba(247, 92, 3, 0.3)'; // Czerwony dla poniedziałku
+                                return 'rgba(247, 92, 3, 0.3)';
                             default:
-                                return 'rgba(0, 0, 255, 0.3)'; // Domyślny kolor dla innych dni
+                                return 'rgba(0, 0, 255, 0.3)';
                         }
                     },
                 },
@@ -100,7 +99,6 @@ export default function ChartPerHour() {
                 },
                 ticks: {
                     autoSkip: false,
-                    // Wyświetl etykietę co piąty element
                     callback: function (val, index) {
                         const date = moment(this.getLabelForValue(val));
                         if (date.format('HH:mm') == '00:00') { return (date.format('dddd')); }
@@ -109,12 +107,12 @@ export default function ChartPerHour() {
                     color: 'black',
                     maxRotation: 30,
                     font: {
-                        size: 15 // Ustaw mniejszy rozmiar czcionki
+                        size: 15
                     }
                 },
                 grid: {
-                    display: true, // Ukrywa siatkę osi X
-                    color: 'rgba(0, 0, 0, 0.1)' // Ustawia subtelny kolor linii siatki
+                    display: true,
+                    color: 'rgba(0, 0, 0, 0.1)'
                 }
             }
         }

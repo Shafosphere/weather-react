@@ -1,4 +1,3 @@
-import data from "./data";
 import React, { useEffect, useReducer } from 'react';
 import moment from 'moment';
 import { Line } from 'react-chartjs-2';
@@ -6,6 +5,13 @@ import { Chart } from 'chart.js';
 import ChartDataLabels from 'chartjs-plugin-datalabels';
 import 'chart.js/auto';
 import './styles-chart-minutely.css'
+import {
+    WiThermometer,
+    WiBarometer,
+    WiStrongWind,
+    WiCloud,
+    WiHumidity
+} from "react-icons/wi";
 
 const initialState = {
     display: 'temperature',
@@ -21,19 +27,24 @@ function reducer(state, action) {
             return { display: 'pressureSurfaceLevel' };
         case 'windSpeed':
             return { display: 'windSpeed' };
+        case 'cloudCover':
+            return { display: 'cloudCover' }
         default:
             throw new Error();
     }
 }
 
-export default function ChartPerMinute() {
+
+
+export default function ChartPerMinute({ data }) {
     const [state, dispatch] = useReducer(reducer, initialState);
     Chart.register(ChartDataLabels);
 
     useEffect(() => {
-        console.log(state);
-        Chart.unregister(textCenter);
-        Chart.register(textCenter);
+        const timeoutId = setTimeout(() => {
+            Chart.unregister(textCenter);
+            Chart.register(textCenter);
+        }, 250);
     }, [state]);
 
     const chartData = {
@@ -77,15 +88,14 @@ export default function ChartPerMinute() {
         id: 'textCenter',
         beforeDatasetsDraw(chart, args, options) {
             const { ctx, chartArea: { top, bottom, left, right, width, height } } = chart;
-            console.log(state.display)
-            if (options.shouldDisplayText) { 
+            if (options.shouldDisplayText) {
                 ctx.save();
                 ctx.font = 'bold 50px sans-serif';
                 ctx.fillStyle = 'grey';
                 ctx.textAlign = 'center';
                 ctx.fillText(backgroundChartText(), width / 2 + left, height / 2 + top);
                 ctx.restore();
-           }
+            }
         }
     }
     const chartOptions = {
@@ -131,7 +141,6 @@ export default function ChartPerMinute() {
                 beginAtZero: false,
                 title: {
                     display: false,
-                    text: 'Temperature (°C)',
                     font: {
                         size: 20,
                         weight: 'bold',
@@ -169,7 +178,7 @@ export default function ChartPerMinute() {
                     }
                 },
                 grid: {
-                    display: false, // Ukrywa siatkę osi X
+                    display: false,
                 }
             }
         }
@@ -179,41 +188,50 @@ export default function ChartPerMinute() {
         temperature: value => `${value}°C`,
         humidity: value => `${value} %`,
         windSpeed: value => `${value} km/h`,
-        pressureSurfaceLevel: value => `${value} hPa`
+        pressureSurfaceLevel: value => `${value} hPa`,
+        cloudCover: value => `${value} %`,
     };
-    function backgroundChartText(){
+
+    function backgroundChartText() {
         switch (state.display) {
             case 'temperature':
                 return 'Temperature';
             case 'humidity':
                 return 'Humidity';
             case 'pressureSurfaceLevel':
-                return 'Rain Chance';
+                return 'Pressure Level';
+            case 'cloudCover':
+                return 'Clouds';
             default:
                 return 'Wind Speed';
         };
+
     }
-    function click() {
-        console.log(state)
-    }
+
+    const ButtonGroup = ({ dispatch }) => (
+        <div className="button-container">
+            <div onClick={() => dispatch({ type: 'temperature' })} className={`temperature-minutely one-button-container ${state.display === 'temperature' ? 'active' : 'deactive'}`}>
+                <WiThermometer />
+            </div>
+            <div onClick={() => dispatch({ type: 'humidity' })} className={`humidity-minutely one-button-container ${state.display === 'humidity' ? 'active' : 'deactive'}`}>
+                <WiHumidity />
+            </div>
+            <div onClick={() => dispatch({ type: 'pressure' })} className={`pressure-minutely one-button-container ${state.display === 'pressureSurfaceLevel' ? 'active' : 'deactive'}`}>
+                <WiBarometer />
+            </div>
+            <div onClick={() => dispatch({ type: 'windSpeed' })} className={`windSpeed-minutely one-button-container ${state.display === 'windSpeed' ? 'active' : 'deactive'}`}>
+                <WiStrongWind />
+            </div>
+            <div onClick={() => dispatch({ type: 'cloudCover' })} className={`cloudCover-minutely one-button-container ${state.display === 'cloudCover' ? 'active' : 'deactive'}`}>
+                <WiCloud />
+            </div>
+        </div>
+    );
+
     return (
         <div>
             <Line data={chartData} options={chartOptions} />
-            <button onClick={() => dispatch({ type: 'temperature' })}>
-                Show Temperature
-            </button>
-            <button onClick={() => dispatch({ type: 'humidity' })}>
-                Show Humidity
-            </button>
-            <button onClick={() => dispatch({ type: 'pressure' })}>
-                Show Pressure
-            </button>
-            <button onClick={() => dispatch({ type: 'windSpeed' })}>
-                Show Wind Speed
-            </button>
-            <button onClick={() => click()}>
-                state
-            </button>
+            <ButtonGroup dispatch={dispatch} />
         </div>
     );
 }
