@@ -87,7 +87,7 @@ export default function ChartPerMinute({ data }) {
     const textCenter = {
         id: 'textCenter',
         beforeDatasetsDraw(chart, args, options) {
-            const { ctx, chartArea: { top, bottom, left, right, width, height } } = chart;
+            const { ctx, chartArea: { top, left, width, height } } = chart;
             if (options.shouldDisplayText) {
                 ctx.save();
                 ctx.font = 'bold 50px sans-serif';
@@ -116,7 +116,7 @@ export default function ChartPerMinute({ data }) {
             },
             title: {
                 display: true,
-                text: 'Temperature in the next hour'
+                text: 'Weather in the next hour'
             },
             legend: {
                 display: false

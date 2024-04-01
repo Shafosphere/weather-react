@@ -1,8 +1,7 @@
-import { useState } from 'react';
+import React from 'react';
 import { WiDaySunny, WiCloudy, WiDayCloudy, WiRain, WiDayRain, WiStrongWind, WiSunrise, WiSunset } from "react-icons/wi";
 import "./styles-card.css"
 export default function WeatherCard({ data }) {
-    const [icon, setIcon] = useState();
     function getWeatherIcon(cloudCover, rainingPropabylyty) {
         if (cloudCover >= 75) {
             if (rainingPropabylyty >= 35) {
@@ -20,7 +19,6 @@ export default function WeatherCard({ data }) {
     }
     return (
         <div className='grid-container'>
-            {/* <h5>{(data[0].timelines.daily).length}</h5> */}
             {(data[0].timelines.daily).map((item, index) => (
                 <div key={index} className='grid-item'>
                     <div className='grid-item-top'>

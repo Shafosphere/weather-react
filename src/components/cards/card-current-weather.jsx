@@ -1,22 +1,25 @@
 import "./styles-current-weather.css";
 import moment from 'moment';
-import { 
-    WiDaySunny, 
-    WiCloudy, 
-    WiDayCloudy, 
-    WiRain, 
-    WiBarometer, 
-    WiDayRain, 
-    WiStrongWind, 
-    WiUmbrella, 
-    WiCloud, 
-    WiHumidity 
+import {
+    WiDaySunny,
+    WiCloudy,
+    WiDayCloudy,
+    WiRain,
+    WiBarometer,
+    WiDayRain,
+    WiStrongWind,
+    WiUmbrella,
+    WiCloud,
+    WiHumidity
 } from "react-icons/wi";
 // Component for displaying the current date
-function CurrentDate({ currentDate }) {
+
+function CurrentDate({ currentDate, name }) {
+    const firstWord = name.split(',')[0].trim();
     return (
         <div className="head-current">
-            <h3>{currentDate}</h3>
+            <h4>{currentDate}</h4>
+            <h4>&nbsp;{firstWord}</h4>
         </div>
     );
 }
@@ -80,7 +83,7 @@ export default function CurrentWeather({ data }) {
     return (
         <div className="container-current">
             <div className="window-current">
-                <CurrentDate currentDate={currentDateValue} />
+                <CurrentDate name={data[0].location.name} currentDate={currentDateValue} />
                 <div className="body-current">
                     <div className="body-left-current">
                         <WeatherIcon

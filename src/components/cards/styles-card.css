@@ -30,20 +30,15 @@
 
 .grid-item-top p {
     flex-grow: 1;
-    /* Pozwala tekstu rosnąć i wypełniać dostępną przestrzeń */
     margin: 0;
-    /* Usuwa wszystkie marginesy */
 }
 
 .icon-container {
     transform: scale(5);
     margin-right: 1.5rem;
     max-width: 50px;
-    /* Ogranicza szerokość ikony */
     max-height: 50px;
-    /* Ogranicza wysokość ikony */
     flex-shrink: 0;
-    /* Zapobiega zmniejszaniu ikony */
 }
 
 
@@ -148,4 +143,3 @@
     transform: scale(3);
     margin-right: 1rem;
 }
-

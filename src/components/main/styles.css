@@ -5,11 +5,9 @@
     justify-content: center;
 }
 
-/* styles.css */
 .open-sans {
     font-family: "Open Sans", sans-serif;
 }
-
 
 .window {
     background-color: white;
@@ -29,6 +27,15 @@
     align-items: center;
     justify-content: center;
     flex-direction: column;
+    position: relative;
+}
+
+.top>a {
+    position: absolute;
+    bottom: 0;
+    font-weight: bold;
+    color: #DDDDDD;
+    text-decoration: none;
 }
 
 .bot {
@@ -44,44 +51,71 @@
 }
 
 .custom_input {
-	display: flex;
-	align-items: center;
-	position: relative;
-	max-width: 100%;
+    display: flex;
+    align-items: center;
+    position: relative;
+    max-width: 100%;
 }
 
 .input {
-	font-size: 22px;
-	font-weight: bold;
-	padding: 7px 21px;
-	width: 100%;
-	padding-right: 7px;
-	outline: none;
-	background: #FFFFFF;
-	color: #000000;
-	border: 1px solid #C4D1EB;
-	border-radius: 2px;
-	box-shadow: 3px 3px 4px 0px #E2E2E2;
-	transition: .3s ease;
+    font-size: 22px;
+    font-weight: bold;
+    padding: 7px 21px;
+    width: 100%;
+    padding-right: 7px;
+    outline: none;
+    background: #FFFFFF;
+    color: #000000;
+    border: 1px solid #C4D1EB;
+    border-radius: 2px;
+    box-shadow: 3px 3px 4px 0px #E2E2E2;
+    transition: .3s ease;
 }
 
 .input:focus {
-	background: #F2F2F2;
-	border: 1px solid #5A7EC7;
-	border-radius: 10px;
+    background: #F2F2F2;
+    border: 1px solid #5A7EC7;
+    border-radius: 10px;
 }
 
 .input::placeholder {
-	color: #DDDDDD;
+    color: #DDDDDD;
 }
 
 .svg_icon {
-	position: absolute;
-	right: 28px;
-	fill: #4660DC;
-	width: 22px;
-	height: 22px;
+    position: absolute;
+    right: 28px;
+    fill: #4660DC;
+    width: 22px;
+    height: 22px;
 }
+
 .svg_icon:hover {
     cursor: pointer;
+}
+
+.footer-cointaiter {
+    color: #C4D1EB;
+    height: 100px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.footer-icon {
+    font-size: 25px;
+    vertical-align: middle;
+    margin-left: 5px;
+}
+
+.footer-cointaiter a {
+    color: #7d8699;
+    text-decoration: none;
+    transition: font-size 0.5s;
+}
+
+.footer-cointaiter :hover {
+    color: #484d58;
+    font-size: 105%;
 }

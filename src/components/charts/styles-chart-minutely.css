@@ -1,37 +1,3 @@
-/* .my-button{
-    background: linear-gradient(to right,#0c64cb ,#1294c9);
-    background-color: #0c64cb;
-    color: #fff;
-    font-family: Arial;
-    font-size: 19px;
-    font-weight: 800;
-    font-style: normal;
-    text-decoration: none;
-    padding: 13px 14px;
-    border: 0px solid #000;
-    border-radius: 0px;
-    display: inline-block;
-   }
-   .my-button:hover{
-    background: linear-gradient(to right,#517dd1 ,#58a6c6);
-    background-color: #517dd1;
-   }
-   .my-button:active{
-    transform: scale(0.95);
-   }
-   .button-container{
-    padding-right: 3rem;
-    padding-left: 3rem;
-    margin-top: 1rem;
-    margin-bottom: 1rem;
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    justify-content: space-around;
-    align-items: baseline;
-    align-content: center;
-   } */
-
 .button-container {
     margin-bottom: 1rem;
     margin-top: 1rem;
@@ -44,23 +10,27 @@
     grid-auto-flow: row;
     grid-template-areas:
         "temperature humidity pressure windSpeed cloudCover";
-        border-bottom: 2px solid rgb(214, 212, 226);
-        border-left: 2px solid rgb(214, 212, 226);
-        border-right: 2px solid rgb(214, 212, 226);
+    border-bottom: 2px solid rgb(214, 212, 226);
+    border-left: 2px solid rgb(214, 212, 226);
+    border-right: 2px solid rgb(214, 212, 226);
 }
-.one-button-container{
+
+.one-button-container {
     display: flex;
     justify-content: center;
     align-items: center;
     cursor: pointer;
 }
-.one-button-container:hover{
+
+.one-button-container:hover {
     background-color: whitesmoke;
 }
-.active{
+
+.active {
     font-size: 85px;
 }
-.deactive{
+
+.deactive {
     color: rgb(140, 144, 171);
     background-color: rgb(245, 247, 250);
     border-top: 2px solid rgb(214, 212, 226);
