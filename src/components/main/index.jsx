@@ -1,19 +1,18 @@
-import React, { useState } from 'react';
-import CurrentWeather from '../cards/card-current-weather';
-import WeatherCard from '../cards/cards.jsx';
-import ChartPerHour from '../charts/chart-hours.jsx';
-import ChartPerMinute from '../charts/chart-minutely';
-import FooterContact from './footer.jsx';
-import { SlMagnifier } from 'react-icons/sl';
-import './styles.css';
-import './background.css';
-import data from './data';
+import React, { useState } from "react";
+import CurrentWeather from "../cards/card-current-weather";
+import WeatherCard from "../cards/cards.jsx";
+import ChartPerHour from "../charts/chart-hours.jsx";
+import ChartPerMinute from "../charts/chart-minutely";
+import FooterContact from "./footer.jsx";
+import { SlMagnifier } from "react-icons/sl";
+import "./styles.css";
+import "./background.css";
 
 export default function Main() {
-  const [city, setCity] = useState('');
+  const data = [];
+  const [city, setCity] = useState("");
   const [weatherData, setWeatherData] = useState(data);
   const API_KEY = process.env.REACT_APP_API_KEY;
-
   async function fetchWeatherData() {
     try {
       const data = [];
@@ -23,19 +22,18 @@ export default function Main() {
       data.push(await response.json());
       setWeatherData(data);
     } catch (error) {
-      console.error('Błąd pobierania danych pogodowych:', error);
+      console.error("Błąd pobierania danych pogodowych:", error);
     }
   }
 
   function handleKeyPress(e) {
-    if (e.key === 'Enter') {
+    if (e.key === "Enter") {
       fetchWeatherData();
     }
   }
 
   function TypeACityName(e) {
     setCity(e.target.value);
-    console.log(API_KEY);
   }
 
   function handleIconPress() {
@@ -66,11 +64,17 @@ export default function Main() {
         </div>
         <div className="bot">
           <div className="container-bottom">
-            <h3>{weatherData[0].location.name}</h3>
-            <CurrentWeather data={weatherData} />
-            <WeatherCard data={weatherData} />
-            <ChartPerMinute data={weatherData} />
-            <ChartPerHour data={weatherData} />
+            {weatherData.length === 0 ? (
+              <div className="loader"></div>
+            ) : (
+              <>
+                <h3>{weatherData[0].location.name}</h3>
+                <CurrentWeather data={weatherData} />
+                <WeatherCard data={weatherData} />
+                <ChartPerMinute data={weatherData} />
+                <ChartPerHour data={weatherData} />
+              </>
+            )}
           </div>
         </div>
         <FooterContact />
