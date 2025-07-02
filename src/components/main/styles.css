@@ -12,7 +12,7 @@
 .window {
   background-color: white;
   min-height: 100vh;
-  width: 1000px;
+  width: 60rem;
   opacity: 0.8;
   border: 0px solid #000000;
   -webkit-box-shadow: 10px 10px 14px -3px rgba(0, 0, 0, 0.75);
@@ -102,18 +102,18 @@
 }
 
 .footer-cointaiter {
-    color: #c4d1eb;
-    background-color: #ffffff;
-    height: 3rem;
-    width: 1000px;            /* identycznie jak .window */
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    position: fixed;
-    bottom: 0;
-    left: 50%;                /* wyśrodkowanie */
-    transform: translateX(-50%);
-    z-index: 100;
+  color: #c4d1eb;
+  background-color: #ffffff;
+  height: 3rem;
+  width: 64rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: fixed;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 100;
 }
 
 .footer-icon {
