@@ -17,6 +17,10 @@ A simple React project built for learning purposes. I created this project as on
 
 The Weather Forecast Application is a front-end demo created as a portfolio piece. It lets users search for a city, fetch the latest weather data, and visualize it with charts.
 
+![General](./gifs/1.gif)
+
+![Chart](./gifs/2.gif)
+
 ## Tech Stack
 
 | Purpose   | Libraries / Tools                                    |
